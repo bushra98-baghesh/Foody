@@ -1,0 +1,14 @@
+.parent {
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 1rem;
+  position: relative;
+}
+
+.child {
+  width: 100vw;
+  position: relative;
+  left: calc(-50vw + 50%);
+
+  height: 100px;
+}
