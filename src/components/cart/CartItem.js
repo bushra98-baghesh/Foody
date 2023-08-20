@@ -1,8 +1,25 @@
 import React, { useRef } from "react";
-import { RiArrowRightSFill } from "react-icons/ri";
-import { HiPlus, HiMinus, HiOutlineTrash } from "react-icons/hi";
-import Photo from "../../assets/Rectangle 41888.png";
-function CartItem() {
+import { useDispatch } from "react-redux";
+import {
+  deleteItem,
+  setIncreaseItemQTY,
+  setDecreaseItemQTY,
+} from "../../redux/slices/cartSlice";
+
+import { HiOutlineTrash } from "react-icons/hi";
+
+function CartItem({ item }) {
+  console.log(item, "single");
+  const dispatch = useDispatch();
+  const deletProduct = () => {
+    dispatch(deleteItem(item.id));
+  };
+  const increase = () => {
+    dispatch(setIncreaseItemQTY(item));
+  };
+  const decrease = () => {
+    dispatch(setDecreaseItemQTY(item));
+  };
   const ref = useRef();
   let downX;
   const onPointerMove = (e) => {
@@ -23,45 +40,55 @@ function CartItem() {
   const onPointerup = () => {
     ref.current.removeEventListener("pointermove", onPointerMove);
   };
+  if (item.quantity === 0) {
+    deletProduct();
+  }
 
   return (
-    <div className=" overflow-hidden w-80  mx-auto  border-2 border-[#d3cfcf] rounded-xl">
+    <div className=" overflow-hidden w-80   mx-auto  border-2 border-[#d3cfcf] rounded-xl  shadow-lg ">
       <div
         onPointerDown={onPointerDown}
         onPointerUp={onPointerup}
         ref={ref}
-        className="flex w-96  transition-transform duration-500  shadow-lg       bg-white "
+        className="flex max-h-30 mx-auto gap-1  w-96 transition-transform duration-500"
       >
-        <div className="rounded-xl hover:scale-110 transition-all duration-300 ease-in-out  overflow-hidden">
+        <div className="rounded-xl h-28 hover:scale-110 transition-all duration-300 ease-in-out  overflow-hidden">
           <img
-            src={Photo}
+            src={item?.image}
             alt="img"
-            className=" h-full w-28  object-cover object-center"
+            className="min-h-full  w-28  object-cover object-center"
           />
         </div>
         <div className=" flex flex-1 flex-col items-start p-3 text-start justify-between py-4 sm:mx-4 mx-0 ">
-          <h1 className="font-bold sm:text-base md:text-lg text-base  text-black mb-2">
-            Mac Cheese Burger
-          </h1>
+          <h1 className="font-bold text-base  text-gray-700 ">{item?.name}</h1>
 
-          <div className="flex md:flex-row flex-col  gap-4 md:gap-6 justify-between ">
-            <h1 className="font-bold text-base md:text-lg  text-[#DC0D28]">
-              20.00$
+          <div className="flex  items-center gap-6 justify-between ">
+            <h1 className="font-bold text-sm   text-[#DC0D28]">
+              {item.totalPrice} USD
             </h1>
             <div className="flex items-center justify-between gap-1 ">
-              <button className="bg-[#F1F1F1] rounded-full px-2 font-medium">
+              <button
+                onClick={decrease}
+                className="bg-[#F1F1F1] rounded-full px-2 font-medium"
+              >
                 -
               </button>
               <div className="bg-[#DC0D28] text-white rounded-full text-base text-center font-medium px-3 py-1">
-                2
+                {item.quantity}
               </div>
-              <button className="bg-[#F1F1F1] rounded-full px-1.5 font-medium ">
+              <button
+                onClick={increase}
+                className="bg-[#F1F1F1] rounded-full px-1.5 font-medium "
+              >
                 +
               </button>
             </div>
           </div>
         </div>
-        <div className="bg-[#DC0D28] text-white  flex p-3 items-center">
+        <div
+          onClick={deletProduct}
+          className="bg-[#DC0D28] text-white   flex p-3 items-center"
+        >
           <HiOutlineTrash size={25} />
         </div>
       </div>

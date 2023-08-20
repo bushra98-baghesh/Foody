@@ -6,7 +6,7 @@ import Photo1 from "../../assets/topoffer2.png";
 
 function TopOffers() {
   return (
-    <div className=" container rounded-xl mx-auto  py-6  ">
+    <div className=" container rounded-xl mx-auto  py-4  ">
       <Swiper
         loop={true}
         speed={4000}

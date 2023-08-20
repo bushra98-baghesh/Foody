@@ -1,8 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ProductRate from "../components/product/ProductRate";
 import StarRatings from "react-star-ratings";
 function RatingPage() {
+  const cartItems = useSelector((state) => state.cart.cartItems);
   return (
     <div className="mx-auto  max-w-3xl space-y-4 min-h-screen py-10 px-6 ">
       <h1 className="text-2xl tracking-widest font-semibold text-[#C4C4C4] pb-10">
@@ -14,7 +16,7 @@ function RatingPage() {
           <StarRatings
             rating={2.403}
             numberOfStars={5}
-            starDimension="40px"
+            starDimension="30px"
             starSpacing="1px"
             starRatedColor="#FFC700"
           />
@@ -22,10 +24,10 @@ function RatingPage() {
       </div>
       <div className=" text-start space-y-4 py-2 ">
         <h1 className="text-[#C4C4C4] font-medium text-base">Meals Rate</h1>
-        <div className="border-2 rounded-lg max-w-xl mx-auto py-4 ">
-          <ProductRate />
-          <ProductRate />
-          <ProductRate />
+        <div className="border-2 rounded-lg max-w-xl sm:px-14  mx-auto py-4 ">
+          {cartItems.map((item, index) => (
+            <ProductRate item={item} key={index} />
+          ))}
         </div>
       </div>
       <div className=" text-start ">

@@ -1,15 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Switch from "react-switch";
 import { BsCart4 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 function Header() {
-  const [isDark, setIsDark] = useState(false);
-  const handleChange = (val) => {
-    setIsDark(val);
+  const [theme, setTheme] = useState("light");
+  useEffect(() => {
+    if (window.matchMedia("(prefers-color-scheme:dark)").matches) {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  }, []);
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+  const handleChange = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
   };
   return (
     <div className="flex items-center justify-between px-4 py-4">
-      <Switch
+      {/* <Switch
         offColor="#DFDFDF"
         offHandleColor="#000000"
         onColor="#000000"
@@ -44,10 +58,10 @@ function Header() {
         }
         onChange={handleChange}
         height={27}
-        checked={isDark}
+        checked={theme}
         className="shadow-lg"
-      />
-      <div className="text-xl font-bold">
+      /> */}
+      <div className="text-xl font-bold dark:text-white">
         <span>F</span>
         <span className="text-[#DC0D28]">OO</span>
         <span>D</span>
@@ -56,7 +70,7 @@ function Header() {
 
       <Link
         to="cart"
-        className="bg-white p-2 border-2 border-[#d3cfcf] shadow-lg rounded-lg"
+        className=" dark:text-[#d3cfcf] p-2 border-2 border-[#d3cfcf] shadow-lg rounded-lg"
       >
         <BsCart4 size={24} />
       </Link>

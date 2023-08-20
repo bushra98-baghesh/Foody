@@ -1,86 +1,86 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  ingredients: [],
-
+  cartItems: [],
   totalAmount: 0,
+  totalQuantity: 0,
 };
-
-const burgerBuilderSlice = createSlice({
-  name: "burgerBuilder",
+const CartSlice = createSlice({
   initialState,
+  name: "cart",
   reducers: {
-    addIngredient(state, action) {
+    setAddItemToCart: (state, action) => {
       const newItem = action.payload;
-      const existingItem = state.ingredients.find(
+      const existingItem = state.cartItems.find(
         (item) => item.id === newItem.id
       );
-
+      state.totalQuantity++;
       if (!existingItem) {
         const tempProduct = {
           ...newItem,
           quantity: 1,
-
           totalPrice: newItem.price,
         };
-        state.ingredients.push(tempProduct);
+        state.cartItems.push(tempProduct);
       } else {
         existingItem.quantity++;
         existingItem.totalPrice =
           Number(existingItem.totalPrice) + Number(newItem.price);
       }
-      state.totalAmount = state.ingredients.reduce(
+      state.totalAmount = state.cartItems.reduce(
         (total, item) => total + Number(item.price) * Number(item.quantity),
         0
       );
     },
-    removeIngredient(state, action) {
+    deleteItem: (state, action) => {
       const id = action.payload;
-      const existingItem = state.ingredients.find((item) => item.id === id);
+      const existingItem = state.cartItems.find((item) => item.id === id);
       if (existingItem) {
-        state.ingredients = state.ingredients.filter((item) => item.id !== id);
+        state.cartItems = state.cartItems.filter((item) => item.id !== id);
+        state.totalQuantity = state.totalQuantity - existingItem.quantity;
       }
-      state.totalAmount = state.ingredients.reduce(
+      state.totalAmount = state.cartItems.reduce(
         (total, item) => total + Number(item.price) * Number(item.quantity),
         0
       );
     },
-    setIncreaseIngredientQTY: (state, action) => {
-      const itemIndex = state.ingredients.find(
+    setIncreaseItemQTY: (state, action) => {
+      state.totalQuantity++;
+      const itemIndex = state.cartItems.find(
         (item) => item.id === action.payload.id
       );
       itemIndex.quantity++;
       itemIndex.totalPrice =
         Number(itemIndex.totalPrice) + Number(action.payload.price);
 
-      state.totalAmount = state.ingredients.reduce(
+      state.totalAmount = state.cartItems.reduce(
         (total, item) => total + Number(item.price) * Number(item.quantity),
         0
       );
     },
-    setDecreaseIngredientQTY: (state, action) => {
-      const itemIndex = state.ingredients.find(
+    setDecreaseItemQTY: (state, action) => {
+      const itemIndex = state.cartItems.find(
         (item) => item.id === action.payload.id
       );
       if (itemIndex.quantity > 0) {
+        state.totalQuantity--;
         itemIndex.quantity--;
         itemIndex.totalPrice =
           Number(itemIndex.totalPrice) - Number(action.payload.price);
       }
 
-      state.totalAmount = state.ingredients.reduce(
+      state.totalAmount = state.cartItems.reduce(
         (total, item) => total + Number(item.price) * Number(item.quantity),
         0
       );
     },
   },
 });
-
 export const {
-  addIngredient,
-  removeIngredient,
-  setIncreaseIngredientQTY,
-  setDecreaseIngredientQTY,
-} = burgerBuilderSlice.actions;
+  setAddItemToCart,
+  deleteItem,
+  setIncreaseItemQTY,
+  setDecreaseItemQTY,
+} = CartSlice.actions;
 
-export default burgerBuilderSlice.reducer;
+export default CartSlice.reducer;
