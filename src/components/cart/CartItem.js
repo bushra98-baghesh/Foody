@@ -7,8 +7,10 @@ import {
 } from "../../redux/slices/cartSlice";
 
 import { HiOutlineTrash } from "react-icons/hi";
+import { useThemeHook } from "../ThemeProvider";
 
 function CartItem({ item }) {
+  const [theme] = useThemeHook();
   console.log(item, "single");
   const dispatch = useDispatch();
   const deletProduct = () => {
@@ -60,10 +62,16 @@ function CartItem({ item }) {
           />
         </div>
         <div className=" flex flex-1 flex-col items-start p-3 text-start justify-between py-4 sm:mx-4 mx-0 ">
-          <h1 className="font-bold text-base  text-gray-700 ">{item?.name}</h1>
+          <h1
+            className={`${
+              theme ? "text-[#F1F1F1]" : " text-gray-700"
+            } font-bold text-base`}
+          >
+            {item?.name}
+          </h1>
 
-          <div className="flex  items-center gap-6 justify-between ">
-            <h1 className="font-bold text-sm   text-[#DC0D28]">
+          <div className="flex   items-center gap-4 justify-between ">
+            <h1 className="font-bold text-sm  text-[#DC0D28]">
               {item.totalPrice} USD
             </h1>
             <div className="flex items-center justify-between gap-1 ">

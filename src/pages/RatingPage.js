@@ -3,10 +3,16 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ProductRate from "../components/product/ProductRate";
 import StarRatings from "react-star-ratings";
+import { useThemeHook } from "../components/ThemeProvider";
 function RatingPage() {
+  const [theme] = useThemeHook();
   const cartItems = useSelector((state) => state.cart.cartItems);
   return (
-    <div className="mx-auto  max-w-3xl space-y-4 min-h-screen py-10 px-6 ">
+    <div
+      className={`${
+        theme ? "bg-[#171717]" : " bg-white"
+      } mx-auto  max-w-3xl space-y-4 min-h-screen py-10 px-6 `}
+    >
       <h1 className="text-2xl tracking-widest font-semibold text-[#C4C4C4] pb-10">
         We appreciate your feedback
       </h1>
@@ -35,17 +41,17 @@ function RatingPage() {
           Tell us about your experience
         </h1>
         <div className="py-4 px-4">
-          <div class="mb-6">
+          <div className="mb-6">
             <input
               placeholder="Add note"
               type="text"
               id="large-input"
-              class="block w-full p-6 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md   dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="flex w-full p-6 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md "
             />
           </div>
         </div>
       </div>
-      <div className="bg-white w-full  text-clip  shadow-inner  max-w-4xl items-center border-2 rounded-lg flex gap-10  px-6 mx-auto py-6 my-6">
+      <div className=" w-full  text-clip  shadow-inner  max-w-4xl items-center border-2 rounded-lg flex gap-10  px-6 mx-auto py-6 my-6">
         <Link
           to="successfully"
           className="bg-black rounded-lg px-1 py-2 w-full text-white font-medium text-lg"

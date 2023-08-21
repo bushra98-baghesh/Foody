@@ -1,7 +1,9 @@
 import React from "react";
 import StarRatings from "react-star-ratings";
 import { Link } from "react-router-dom";
+import { useThemeHook } from "../ThemeProvider";
 function ProductCard({ data }) {
+  const [theme] = useThemeHook();
   return (
     <Link
       to={`products/${data.id}`}
@@ -15,11 +17,19 @@ function ProductCard({ data }) {
         />
       </div>
       <div className=" flex flex-1 flex-col items-start m-3 text-start ">
-        <h1 className="font-bold sm:text-base text-sm  text-black dark:text-white mb-2">
+        <h1
+          className={`${
+            theme ? "text-white" : "text-black"
+          } font-bold sm:text-base text-sm   mb-2`}
+        >
           {data.name}
         </h1>
         <div className="space-y-2 ">
-          <p className=" sm:text-base  text-sm font-semibold text-[#545454] dark:text-[#d3cfcf] ">
+          <p
+            className={`${
+              theme ? "text-[#d3cfcf]" : "text-[#545454]"
+            } sm:text-base  text-sm font-semibold`}
+          >
             {data.ingredients.slice(0, 30) + "..."}
           </p>
           <div className="flex flex-col pt-1  sm:justify-between ">

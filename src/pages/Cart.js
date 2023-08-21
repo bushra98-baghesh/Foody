@@ -4,19 +4,28 @@ import { RiArrowLeftSFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { BsMinecart } from "react-icons/bs";
+import { useThemeHook } from "../components/ThemeProvider";
 
 function Cart() {
+  const [theme] = useThemeHook();
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalAmount = useSelector((state) => state.cart.totalAmount);
   console.log(cartItems, "items");
   return (
-    <div className=" mx-auto relative max-w-3xl min-h-screen py-10">
+    <div
+      className={`${
+        theme ? "bg-[#171717]" : " bg-white"
+      } mx-auto relative max-w-3xl min-h-screen py-10`}
+    >
       <div className="flex items-center gap-6 px-4 ">
         <Link
           to="/"
-          className="bg-white p-2 border-2 border-[#d3cfcf] shadow-lg rounded-lg"
+          className=" p-2 border-2 border-[#d3cfcf] shadow-lg rounded-lg"
         >
-          <RiArrowLeftSFill size={25} />
+          <RiArrowLeftSFill
+            size={25}
+            className={`${theme ? "text-[#d3cfcf]" : ""}`}
+          />
         </Link>
         <h1 className="text-lg tracking-wide  font-bold">My Orders</h1>
       </div>
@@ -27,7 +36,11 @@ function Cart() {
       </div>
       {cartItems.length > 0 ? (
         <>
-          <div className="bg-white font-medium   pb-24 text-[#C4C4C4]   items-center border-t-2  rounded-lg flex-col space-y-4  px-6 mx-auto py-6 my-6">
+          <div
+            className={`${
+              theme ? "bg-[#242424]" : " "
+            } font-medium  bottom-0 absolute w-full  pb-24 text-[#C4C4C4]   items-center shadow-[0px_-16px_15px_-6px_rgba(0,0,0,0.20)]  rounded-lg flex-col space-y-4  px-6 mx-auto py-6 my-6`}
+          >
             <div className="flex items-center w-full justify-between px-10">
               <h1 className="text-lg font-medium ">Subtotal </h1>
               <p>{totalAmount} USD</p>
@@ -41,7 +54,11 @@ function Cart() {
               <p className="text-[#DC0D28]">{totalAmount + 2} USD</p>
             </div>
           </div>
-          <div className="bg-white w-full absolute bottom-0 text-clip  shadow-inner  max-w-4xl items-center border-2 rounded-lg flex gap-10  px-6 mx-auto py-6 my-6">
+          <div
+            className={`${
+              theme ? "bg-[#242424]" : " bg-white border-2"
+            } w-full absolute bottom-0 text-clip  shadow-inner  max-w-4xl items-center  rounded-lg flex gap-10  px-6 mx-auto py-6 my-6`}
+          >
             <Link
               to="rating"
               className="bg-black rounded-lg px-1 py-2 w-full text-white font-medium text-lg"

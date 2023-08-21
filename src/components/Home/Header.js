@@ -1,35 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Switch from "react-switch";
 import { BsCart4 } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { ThemeContext } from "../ThemeProvider";
 function Header() {
-  const [theme, setTheme] = useState("light");
+  const { theme, setThemeMode } = useContext(ThemeContext);
+  const [darkMode, setDarkMode] = useState(theme);
   useEffect(() => {
-    if (window.matchMedia("(prefers-color-scheme:dark)").matches) {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-  }, []);
-  useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
+    setThemeMode(darkMode);
+    console.log(darkMode);
+  }, [darkMode]);
   const handleChange = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    setDarkMode(!darkMode);
   };
   return (
     <div className="flex items-center justify-between px-4 py-4">
-      {/* <Switch
-        offColor="#DFDFDF"
-        offHandleColor="#000000"
-        onColor="#000000"
+      <Switch
+        offColor="#000000"
+        offHandleColor="#FFFFFF"
+        onColor="#DFDFDF"
         boxShadow="0px 1px 5px rgba(0, 0, 0, 0.8)"
         activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-        onHandleColor="#FFFFFF"
+        onHandleColor="#000000"
         checkedIcon={
           <div
             style={{
@@ -37,7 +29,7 @@ function Header() {
               justifyContent: "center",
               alignItems: "center",
               height: "100%",
-              fontSize: 18,
+              fontSize: 16,
             }}
           >
             🌙
@@ -50,18 +42,18 @@ function Header() {
               justifyContent: "center",
               alignItems: "center",
               height: "100%",
-              fontSize: 18,
+              fontSize: 16,
             }}
           >
             ☀️
           </div>
         }
         onChange={handleChange}
-        height={27}
-        checked={theme}
+        height={28}
+        checked={darkMode}
         className="shadow-lg"
-      /> */}
-      <div className="text-xl font-bold dark:text-white">
+      />
+      <div className={`${theme ? "text-white" : ""} text-2xl font-bold`}>
         <span>F</span>
         <span className="text-[#DC0D28]">OO</span>
         <span>D</span>
@@ -70,7 +62,9 @@ function Header() {
 
       <Link
         to="cart"
-        className=" dark:text-[#d3cfcf] p-2 border-2 border-[#d3cfcf] shadow-lg rounded-lg"
+        className={`${
+          theme ? "text-[#d3cfcf]" : ""
+        } p-2 border-2 border-[#d3cfcf] shadow-lg rounded-lg`}
       >
         <BsCart4 size={24} />
       </Link>

@@ -14,7 +14,8 @@ function Popular() {
     useGetAllProductsQuery();
   const productsData = products?.data;
   const categoriesItems = categories?.data;
-  const [productState, setProductState] = useState(productsData);
+  const [productState, setProductState] = useState();
+  const [categoriesData, setCategoriesData] = useState(categoriesItems);
   const [slidesPerView, setSlidesPerView] = useState(2);
   const breakpoints = {
     200: 2,
@@ -37,10 +38,12 @@ function Popular() {
     setProductState(filteredItems);
   };
   useEffect(() => {
+    setProductState(productsData);
+    setCategoriesData(categoriesItems);
     updateSlidesPerView();
     window.addEventListener("resize", updateSlidesPerView);
     return () => window.removeEventListener("resize", updateSlidesPerView);
-  }, [updateSlidesPerView]);
+  }, [productsData, categoriesItems, updateSlidesPerView]);
 
   return (
     <div className="px-6  py-6 ">
@@ -53,8 +56,8 @@ function Popular() {
           </div>
 
           <Swiper spaceBetween={15} slidesPerView={slidesPerView}>
-            {categoriesItems &&
-              categoriesItems.map((cat) => {
+            {categoriesData &&
+              categoriesData.map((cat) => {
                 return (
                   <SwiperSlide
                     key={cat.id}
@@ -70,7 +73,7 @@ function Popular() {
                           className=" object-center object-cover h-28  rounded-lg hover:scale-110 hover:opacity-60 ease-in-out duration-200 transition-all"
                         />
                       </button>
-                      <h1 className="text-xs py-2 cursor-pointer sm:text-base md:text-lg font-semibold pb-1  text-[#DC0D28] dark:text-[#DC0D28] ">
+                      <h1 className="text-sm py-2 cursor-pointer sm:text-base md:text-lg font-semibold pb-1  text-[#DC0D28] ">
                         {cat.name}
                       </h1>
                     </div>

@@ -9,7 +9,9 @@ import StarRatings from "react-star-ratings";
 import { useDispatch } from "react-redux";
 import { setAddItemToCart } from "../redux/slices/cartSlice";
 import { useGetProductDetailsQuery } from "../redux/slices/productsApi";
+import { useThemeHook } from "../components/ThemeProvider";
 function ProductDetails() {
+  const [theme] = useThemeHook();
   const { id } = useParams();
   const {
     data: productDetails,
@@ -46,7 +48,11 @@ function ProductDetails() {
     return () => window.removeEventListener("resize", updateSlidesPerView);
   }, []);
   return (
-    <div className="mx-auto max-w-3xl  min-h-screen dark:bg-black ">
+    <div
+      className={`${
+        theme ? "bg-[#171717]" : " bg-white"
+      } mx-auto max-w-3xl  min-h-screen `}
+    >
       <div className=" relative   w-full">
         <Link
           to="/"
@@ -58,12 +64,20 @@ function ProductDetails() {
         <img
           src={product?.image}
           alt="img"
-          className=" w-full h-80 hover:h-96 opacity-80 bg-black duration-300 transition-all ease-in-out shadow-lg  object-cover object-center"
+          className=" w-full h-80 hover:h-96 opacity-90 bg-black duration-300 transition-all ease-in-out shadow-lg  object-cover object-center"
         />
       </div>
-      <div className="bg-white  shadow-[0px_-16px_15px_-6px_rgba(0,0,0,0.64)] rounded-t-3xl -mt-4 relative z-40 ">
+      <div
+        className={`${
+          theme ? "bg-[#171717]" : " bg-white "
+        } shadow-[0px_-16px_15px_-6px_rgba(0,0,0,0.44)] rounded-t-3xl -mt-4 relative z-40   `}
+      >
         <div className="py-4 px-10 flex flex-col sm:flex-row items-center justify-between text-start ">
-          <h1 className="font-bold md:text-2xl sm:text-xl text-lg tracking-wider  text-[#323232] mb-2">
+          <h1
+            className={`${
+              theme ? "text-[#e3e3e3]" : "text-[#323232]"
+            } font-bold md:text-2xl sm:text-xl text-lg tracking-wider   mb-2`}
+          >
             {product?.name}
           </h1>
           <h1 className="font-bold text-lg  text-[#DC0D28]">
@@ -79,7 +93,11 @@ function ProductDetails() {
             starRatedColor="#FFC700"
           />
           <div className="py-6 space-y-2">
-            <p className="  font-semibold text-[#323232]">
+            <p
+              className={`${
+                theme ? "text-[#e3e3e3]" : "text-[#323232]"
+              } font-semibold`}
+            >
               {product?.ingredients}
             </p>
           </div>
@@ -144,7 +162,7 @@ function ProductDetails() {
           </Swiper>
         </div>
 
-        <div className="bg-white w-full  bottom-0 text-clip  shadow-inner  max-w-4xl items-center justify-between border-2 rounded-lg flex  gap-4 space-y-2 sm:space-y-0  px-6 mx-auto py-6 my-6">
+        <div className=" w-full  mt-20 text-clip  shadow-inner  max-w-4xl items-center justify-between border-t-2 rounded-lg flex  gap-4 space-y-2 sm:space-y-0  px-6 mx-auto py-6 my-6">
           <button
             onClick={addItemToCart}
             className="bg-black rounded-lg px-1 py-2 w-full text-white font-medium text-base"
