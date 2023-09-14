@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import Switch from "react-switch";
 import { BsCart4 } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../ThemeProvider";
+import { useSelector } from "react-redux";
 function Header() {
   const { theme, setThemeMode } = useContext(ThemeContext);
+  const totalQuantity = useSelector((state) => state.cart.totalQuantity);
   const [darkMode, setDarkMode] = useState(theme);
+  const navigate = useNavigate();
   useEffect(() => {
     setThemeMode(darkMode);
-    console.log(darkMode);
-  }, [darkMode]);
+  }, [darkMode, setThemeMode]);
   const handleChange = () => {
     setDarkMode(!darkMode);
   };
@@ -60,14 +62,17 @@ function Header() {
         <span>Y</span>
       </div>
 
-      <Link
-        to="cart"
+      <button
+        onClick={() => navigate("/cart")}
         className={`${
           theme ? "text-[#d3cfcf]" : ""
-        } p-2 border-2 border-[#d3cfcf] shadow-lg rounded-lg`}
+        } p-2 border-2 border-[#d3cfcf] shadow-lg rounded-lg relative`}
       >
+        <div className="bg-[#DC0D28] shadow-sm shadow-[#DC0D28]  rounded-full w-6 h-6 absolute -top-3 -right-2 text-white text-sm flex items-center justify-center">
+          {totalQuantity}
+        </div>
         <BsCart4 size={24} />
-      </Link>
+      </button>
     </div>
   );
 }

@@ -1,33 +1,27 @@
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Spinner from "../components/skeletons/Spinner";
+import Language from "../pages/Language";
 const HomePage = lazy(() => import("../pages/HomePage"));
 const Cart = lazy(() => import("../pages/Cart"));
 const ProductDetails = lazy(() => import("../pages/ProductDetails"));
-const RatingPage = lazy(() => import("../pages/RatingPage"));
 const SuccessfullOrder = lazy(() => import("../pages/SuccessfullOrder"));
 
 function Routers() {
   return (
     <Routes>
+      <Route path="/" element={<Language />} />
       <Route
-        path="/"
+        path="/home"
         element={
           <Suspense>
             <HomePage />
           </Suspense>
         }
       />
+
       <Route
-        path="cart/rating"
-        element={
-          <Suspense fallback={<Spinner />}>
-            <RatingPage />
-          </Suspense>
-        }
-      />
-      <Route
-        path="cart/rating/successfully"
+        path="cart/successfully"
         element={
           <Suspense fallback={<Spinner />}>
             <SuccessfullOrder />
@@ -43,7 +37,7 @@ function Routers() {
         }
       />
       <Route
-        path="products/:id"
+        path="/:id"
         element={
           <Suspense fallback={<Spinner />}>
             <ProductDetails />

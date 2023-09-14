@@ -1,8 +1,8 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper";
-import Photo from "../../assets/topoffer.png";
-import Photo1 from "../../assets/topoffer2.png";
+import Photo from "../../assets/offer.jpg";
+import Photo1 from "../../assets/topoffer.png";
 
 function TopOffers() {
   return (
@@ -23,20 +23,20 @@ function TopOffers() {
         slidesPerView={1}
       >
         <SwiperSlide>
-          <div className="max-w-3xl flex mx-auto  rounded-2xl items-center justify-center px-4  ">
+          <div className="max-w-3xl flex mx-auto  items-center justify-center   ">
             <img
               src={Photo}
               alt=""
-              className=" opacity-60 w-full object-cover"
+              className=" opacity-60 object-center object-cover max-h-52 w-full rounded-2xl"
             />
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="max-w-3xl flex mx-auto   rounded-2xl items-center justify-center px-4  ">
+          <div className="max-w-3xl flex mx-auto  items-center justify-center   ">
             <img
               src={Photo1}
               alt=""
-              className=" opacity-60 w-full object-cover"
+              className="  opacity-60 object-center object-cover max-h-52 w-full rounded-2xl "
             />
           </div>
         </SwiperSlide>

@@ -6,15 +6,20 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "./components/ThemeProvider";
+import { LangProvider } from "./components/LangProvider";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider>
-        <Provider store={store}>
-          <App />
-        </Provider>
+        <LangProvider>
+          <Provider store={store}>
+            <Toaster />
+            <App />
+          </Provider>
+        </LangProvider>
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>
